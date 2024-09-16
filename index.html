@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Olly Calculator</title>
+    <link href="https://fonts.cdnfonts.com/css/google-sans" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body,
+      html {
+        font-family: 'Product Sans Light', sans-serif !important;
+        height: 100%;
+        margin: 0;
+      }
+
+      .calculator {
+        height: fit-content;
+        width: 400px;
+        max-width: 400px;
+        background-color: #fff;
+        border-radius: 1rem;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+      }
+
+      .screen {
+        color: white;
+        height: 180px;
+        padding: 1rem;
+        text-align: right;
+        border-radius: 0.5rem;
+        font-size: 2.25rem;
+        position: relative;
+      }
+
+      .answer {
+        right: 1rem;
+        font-size: 1.25rem;
+        color: gray;
+        transition: all 0.3s ease-in-out;
+        position: absolute;
+      }
+
+      .large-font {
+        font-size: 2.80rem;
+      }
+
+      .small-font {
+        font-size: 1.4rem;
+      }
+
+      .btn {
+        font-weight: 300;
+        width: 4.5rem;
+        height: 4.5rem;
+        font-size: 1.8rem;
+        border-radius: 50px !important;
+      }
+
+      .text-my {
+        font-size: 1.3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="flex items-center justify-center bg-white">
+      <!-- Grid system -->
+      <div class="h-screen grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Left Column: Heading and Paragraph -->
+        <div class="flex flex-col justify-center text-center space-y-6 p-6 bg-white">
+          <img src="olly.png" class="mx-auto drop-shadow-sm object-cover" width="200" height="200">
+          <h1 class="text-5xl font-bold text-gray-800 tracking-wider">Olly Calculator</h1>
+          <p class="text-my text-gray-600 mx-8 tracking-wide"> Welcome to the Olly Calculator app. You can perform various operations such as addition, subtraction, multiplication, and division. </p>
+          <ul class="leading-8 text-lg text-center ">
+            <li>&#x2192; Simple UI: User-friendly design.</li>
+            <li>&#x2192; Basic arithmetic: Addition, subtraction, multiplication, division.</li>
+            <li class="mt-3 font-bold">** Future Updates **</li>
+            <li>* Scientific functions: Trigonometry, logarithms, powers, etc.</li>
+            <li>* Memory functions: M+, M-, MR, MC.</li>
+            <li>* Unit conversions: Length, weight, temperature, and more.</li>
+          </ul>
+          <p class="pt-8 tracking-wide">Copyright All Rights Reserved 2024 | Niyander</p>
+        </div>
+        
+		<!-- Right Column: Calculator -->
+        <div class="flex justify-center items-center bg-slate-200">
+          <div class="rotate-2 m-16">
+            <div class="calculator p-5 rounded-xl border border-4 border-white shadow-lg animate__animated animate__rotateInDownRight">
+              <!-- Calculator Display -->
+              <div class="screen bg-white border border-4 text-black" id="screen-container">
+                <div id="screen" class="capitalize mb-3">Calculator</div>
+                <div id="answer" class="answer"></div>
+              </div>
+              <!-- Calculator Buttons -->
+              <div class="grid grid-cols-4 gap-4 mt-6">
+                <button class="btn rounded-lg border" onclick="clearScreen()">AC</button>
+                <button class="btn rounded-lg border" onclick="backspace()">←</button>
+                <button class="btn rounded-lg border" onclick="inputValue('%')">%</button>
+                <button class="btn bg-zinc-200 rounded-full border shadow-sm" onclick="inputValue('/')">÷</button>
+                <button class="btn rounded-lg border" onclick="inputValue('7')">7</button>
+                <button class="btn rounded-lg border" onclick="inputValue('8')">8</button>
+                <button class="btn rounded-lg border" onclick="inputValue('9')">9</button>
+                <button class="btn bg-zinc-200 rounded-full border shadow-sm" onclick="inputValue('*')">×</button>
+                <button class="btn rounded-lg border" onclick="inputValue('4')">4</button>
+                <button class="btn rounded-lg border" onclick="inputValue('5')">5</button>
+                <button class="btn rounded-lg border" onclick="inputValue('6')">6</button>
+                <button class="btn bg-zinc-200 rounded-full border shadow-sm" onclick="inputValue('-')">−</button>
+                <button class="btn rounded-lg border" onclick="inputValue('1')">1</button>
+                <button class="btn rounded-lg border" onclick="inputValue('2')">2</button>
+                <button class="btn rounded-lg border" onclick="inputValue('3')">3</button>
+                <button class="btn bg-zinc-200 rounded-full border shadow-sm" onclick="inputValue('+')">+</button>
+                <button class="btn rounded-lg border shadow-sm" onclick="my_modal_3.showModal()">Fun</button>
+                <button class="btn rounded-lg border shadow-sm" onclick="inputValue('0')">0</button>
+                <button class="btn rounded-lg border shadow-sm" onclick="inputValue('.')">.</button>
+                <button class="btn bg-red-600 text-white rounded-full border shadow-sm hover:bg-sky-700" onclick="calculate()">=</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+	
+    <!-- Modal -->
+    <dialog id="my_modal_3" class="modal">
+      <div class="modal-box">
+        <form method="dialog">
+          <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 hover:bg-white">✕</button>
+        </form>
+        <h3 class="text-3xl font-bold tracking-wider my-1">History</h3>
+        <p class="py-2 text-lg tracking-wider">All your calculation history will be saved here</p>
+        <div class="overscroll-y-auto">
+          <div class="mt-6">
+            <h2 class="text-xl justify-end text-red-600 uppercase">8 December</h2>
+            <div class="py-2 mt-2 text-lg text-end tracking-wider">400+500 <br />
+              <span class="py-2 mt-2 text-3xl">900</span>
+            </div>
+          </div>
+          <div class="mt-6">
+            <h2 class="text-xl justify-end text-red-600 uppercase">8 January</h2>
+            <div class="py-2 mt-2 text-lg text-end tracking-wider">800+500 <br />
+              <span class="py-2 mt-2 text-3xl">1300</span>
+            </div>
+          </div>
+          <div class="mt-6">
+            <h2 class="text-xl justify-end text-red-600 uppercase">8 April</h2>
+            <div class="py-2 mt-2 text-lg text-end tracking-wider">-598+852 <br />
+              <span class="py-2 mt-2 text-3xl">254</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </dialog>
+    
+	<script>
+      let screen = document.getElementById('screen');
+      let answer = document.getElementById('answer');
+      let currentInput = '';
+      let calculated = false;
+
+      function inputValue(value) {
+        if (calculated) {
+          currentInput = '';
+          calculated = false;
+          // Reset font sizes
+          screen.classList.remove('small-font');
+          answer.classList.remove('large-font');
+        }
+        const operators = ['+', '-', '*', '/'];
+        const lastChar = currentInput.slice(-1);
+       
+        if (currentInput === '' && operators.includes(value)) {
+          return;
+        }
+        // If the last character is an operator and the new value is an operator, replace it
+        if (operators.includes(lastChar) && operators.includes(value)) {
+          currentInput = currentInput.slice(0, -1) + value;
+        } else {
+          currentInput += value;
+        }
+        screen.textContent = currentInput;
+        // Calculate preview result if an operator and number are present
+        if (operators.some(operator => currentInput.includes(operator)) && !operators.includes(value)) {
+          try {
+            let result = eval(currentInput);
+            answer.textContent = result;
+          } catch (e) {
+            answer.textContent = '';
+          }
+        } else {
+          answer.textContent = '';
+        }
+      }
+
+      function clearScreen() {
+        currentInput = '';
+        screen.textContent = '';
+        answer.textContent = '';
+        answer.classList.remove('large-font'); 
+      }
+
+      function backspace() {
+        currentInput = currentInput.slice(0, -1);
+        screen.textContent = currentInput || '0';
+        // Recalculate only if an operator exists in the current input
+        const operators = ['+', '-', '*', '/'];
+        let hasOperator = operators.some(operator => currentInput.includes(operator));
+        if (hasOperator) {
+          try {
+            let result = eval(currentInput);
+            answer.textContent = result;
+            screen.classList.remove('small-font'); // Reset font size when backspacing
+            screen.classList.add('large-font'); // Add the class to increase font size
+          } catch (e) {
+            answer.textContent = '';
+          }
+        } else {
+          answer.textContent = '';
+        }
+      }
+
+      function calculate() {
+        const operators = ['+', '-', '*', '/'];
+        const lastChar = currentInput.slice(-1);
+        // Prevent calculation if the last character is an operator
+        if (operators.includes(lastChar) || currentInput === '') {
+          return; // Do nothing if the last character is an operator or if input is empty
+        }
+        try {
+          let result = eval(currentInput).toString();
+          answer.textContent = result; // Show result in the answer div
+          screen.classList.add('small-font');
+          answer.classList.add('large-font');
+          calculated = true;
+        } catch (e) {
+          screen.textContent = 'Error';
+          answer.textContent = '';
+          answer.classList.remove('large-font'); 
+          screen.classList.remove('small-font'); 
+          currentInput = '';
+        }
+      }
+    </script>
+  </body>
+</html>
